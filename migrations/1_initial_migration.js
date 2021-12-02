@@ -1,8 +1,8 @@
-const MyLittleComputer = artifacts.require('MyLittleComputer');
-const baseURI = 'http://54.146.118.202/computer-api/v0/nfts/';
+const MyLittleComputer = artifacts.require('UniVerse');
+const baseURI = 'http://54.146.118.202/computer-api/v0/nfts/'; //TODO: update api
 
 module.exports = function(deployer) {
   deployer.deploy(MyLittleComputer, baseURI).then(() => {
-    console.log('MyLittleComputer is deployed.');
+    console.log('UniVerse is deployed.');
   });
 };

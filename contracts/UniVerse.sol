@@ -8,22 +8,22 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "./ERC721Pausable.sol";
-contract MyLittleComputer is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
+contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
     using SafeMath for uint256;
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdTracker;
 
-    uint256 public constant MAX_ELEMENTS = 10000;
-    uint256 public constant PRICE = 5 * 10**16;
+    uint256 public constant MAX_ELEMENTS = 1000000000;
+    uint256 public constant PRICE = 5 * 10**16; //TODO: update price
     uint256 public constant MAX_BY_MINT = 20;
     uint256 public constant MAX_BY_OWNER = 20;
-    address public constant creatorAddress = 0x4B3aacFd767D7F030984E4cD4261927De5c0bcF6; // TODO: update
-    address public constant devAddress = 0x4B3aacFd767D7F030984E4cD4261927De5c0bcF6; // TODO: update
+    address public constant creatorAddress = 0x; // TODO: update
+    address public constant devAddress = 0x; // TODO: update
     string public baseTokenURI;
 
     event CreateComputer(uint256 indexed id);
-    constructor(string memory baseURI) ERC721("MyLittleComputer", "MLC") {
+    constructor(string memory baseURI) ERC721("UniVerse", "Univ") {
         setBaseURI(baseURI);
         pause(true);
     }
