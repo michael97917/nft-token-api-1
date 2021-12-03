@@ -14,13 +14,14 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
 
     Counters.Counter private _tokenIdTracker;
 
-    uint256 public constant MAX_ELEMENTS = 1000000000;
+    uint256 public constant MAX_ELEMENTS = 1000;
     uint256 public constant PRICE = 5 * 10**16; //TODO: update price
     uint256 public constant MAX_BY_MINT = 20;
     uint256 public constant MAX_BY_OWNER = 20;
     address public constant creatorAddress = 0x; // TODO: update
     address public constant devAddress = 0x; // TODO: update
     string public baseTokenURI;
+    byte[42][] public _whitedList;
 
     event CreateComputer(uint256 indexed id);
     constructor(string memory baseURI) ERC721("UniVerse", "Univ") {
@@ -35,13 +36,42 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
         }
         _;
     }
+
+    modifier onlyWhitedListMemeber {
+        require(isWhitedList(_msgSender()), "This address doesn't include in whitelist")
+    }
+
+    function isWhitedList(address a) {
+        uint256 initialization;
+        for (initialization = 0; initialization < _whitedList.length; initialization++){
+            if (_msgSender() == _whitedList[initialization]){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function setWhitedList(byte[42][] row) public view onlyOwner {
+        _whitedList = row;
+    }
+
+    function removeWhiteList() public view onlyOwner return (bool) {
+        byte[42][] removeList;
+        _whitedList = removeList;
+        return true;
+    }
+
+    function getWhitedList() internal view returns (byte[42][]) {
+        return _whitedList
+    }
+
     function _totalSupply() internal view returns (uint) {
         return _tokenIdTracker.current();
     }
     function totalMint() public view returns (uint256) {
         return _totalSupply();
     }
-    function mint(address _to, uint256 _count) public payable saleIsOpen {
+    function mint(address _to, uint256 _count) public payable onlyWhitedListMemeber saleIsOpen {
         uint256 total = _totalSupply();
         require(total + _count <= MAX_ELEMENTS, "Max limit");
         require(total <= MAX_ELEMENTS, "Sale end");
